@@ -49,10 +49,49 @@ class UI {
     this.bodyInput.value = ""
   }
 
+  clearIdInput() {
+    this.idInput.value = ""
+  }
+
   clearAlert() {
     const currentAlert = document.querySelector(".alert")
     if (currentAlert) {
       currentAlert.remove()
+    }
+  }
+
+  fillData(data) {
+    this.titleInput.value = data.title
+    this.bodyInput.value = data.body
+    this.idInput.value = data.id
+
+    this.changeFormState("edit")
+  }
+
+  changeFormState(type) {
+    if (type === "edit") {
+      this.postSubmit.textContent = "Edit Post"
+      this.postSubmit.className = "post-submit btn btn-warning btn-block"
+
+      // Create a cancel button
+      const button = document.createElement("button")
+      button.className = "post-cancel btn btn-light btn-block"
+      button.textContent = "Cancel Edit"
+
+      const cardForm = document.querySelector(".card-form")
+      const formEnd = document.querySelector(".form-end")
+
+      cardForm.insertBefore(button, formEnd)
+    } else {
+      this.postSubmit.textContent = "Post It"
+      this.postSubmit.className = "post-submit btn btn-primary btn-block"
+
+      if (document.querySelector(".post-cancel")) {
+        document.querySelector(".post-cancel").remove()
+      }
+
+      this.clearIdInput()
+      this.clearInputFields()
     }
   }
 }
