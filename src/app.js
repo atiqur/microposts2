@@ -5,6 +5,7 @@ import { ui } from "./ui"
 // Event loaders
 document.addEventListener("DOMContentLoaded", getPosts)
 document.querySelector(".post-submit").addEventListener("click", submitPost)
+document.querySelector("#posts").addEventListener("click", deletePost)
 
 // Event handlers
 function getPosts() {
@@ -39,6 +40,23 @@ function submitPost(e) {
       ui.showAlert("Post added", "alert alert-success")
     } else {
       // TODO: Edit post
+    }
+  }
+
+  e.preventDefault()
+}
+
+function deletePost(e) {
+  if (e.target.parentElement.classList.contains("delete")) {
+    const id = e.target.parentElement.dataset.id
+    if (confirm("Are you sure?")) {
+      http
+        .delete(`http://localhost:3000/posts/${id}`)
+        .then(() => {
+          ui.showAlert("Post deleted", "alert alert-warning")
+          getPosts()
+        })
+        .catch((err) => console.error(err))
     }
   }
 
