@@ -19,16 +19,28 @@ function submitPost(e) {
   const body = document.querySelector("#body").value
   const id = document.querySelector("#id").value
 
-  const data = {
-    title,
-    body,
-    id,
-  }
+  if (title === "" && body === "") {
+    ui.showAlert("Please fill up all fields", "alert alert-danger")
+  } else {
+    if (id === "") {
+      const data = {
+        title,
+        body,
+        id,
+      }
 
-  http
-    .post("http://localhost:3000/posts", data)
-    .then((data) => getPosts())
-    .catch((err) => console.error(err))
+      http
+        .post("http://localhost:3000/posts", data)
+        .then((data) => getPosts())
+        .catch((err) => console.error(err))
+
+      ui.clearInputFields()
+      ui.clearAlert()
+      ui.showAlert("Post added", "alert alert-success")
+    } else {
+      // TODO: Edit post
+    }
+  }
 
   e.preventDefault()
 }

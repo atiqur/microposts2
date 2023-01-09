@@ -29,6 +29,32 @@ class UI {
     })
     this.post.innerHTML = output
   }
+
+  showAlert(message, className) {
+    const div = document.createElement("div")
+    div.className = className
+    div.appendChild(document.createTextNode(message))
+
+    const container = document.querySelector(".postsContainer")
+    const posts = document.querySelector("#posts")
+    container.insertBefore(div, posts)
+
+    setTimeout(() => {
+      this.clearAlert()
+    }, 3000)
+  }
+
+  clearInputFields() {
+    this.titleInput.value = ""
+    this.bodyInput.value = ""
+  }
+
+  clearAlert() {
+    const currentAlert = document.querySelector(".alert")
+    if (currentAlert) {
+      currentAlert.remove()
+    }
+  }
 }
 
 export const ui = new UI()
